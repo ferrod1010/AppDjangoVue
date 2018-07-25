@@ -1,0 +1,20 @@
+<form method="post" v-on:submit.prevent="createLibro" class="create-form">
+	{% csrf_token %}
+		<div class="modal-header">
+		<h2 class="modal-title" >Crear libro</h2>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		<div class="modal-body">
+      <input type="text" name="titulo" value="" class="form-control" placeholder="Titulo" v-model="newTitulo"><br>
+      <input type="text" name="autor" value="" class="form-control" placeholder="Autor" v-model="newAutor"><br>
+      <label for="">Fecha de publicacion</label><br>
+      <input type="date" name="fecha" value="" class="form-control" v-model="newFecha"><br>
+      <input type="number" min=0 step=0.01 name="precio" placeholder="Precio" class="form-control" v-model="newPrecio"><br>
+      <input type="number" min=0  name="paginas" placeholder="Paginas" class="form-control" v-model="newPaginas">
+		</div>
+		<div class="modal-footer">
+		<button type="submit" class="btn btn-primary">Guardar</button>
+		</div>
+</form>

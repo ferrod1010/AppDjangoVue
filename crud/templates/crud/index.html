@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Libros{% endblock %}
+{% block content %}
+
+<div id="app">
+  <h1 class="page-header">Libros</h1>
+  <div class="col-md-8">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#create">
+    <span class="glyphicon glyphicon-plus"></span>
+    Nuevo libro
+    </button>
+  </div>
+  <div class="col-md-4">
+    <input type="text" class="form-control" placeholder="Buscar" v-model="search">
+  </div>
+
+  <paginate name="libros" :list="libros" :per="3" >
+  <table class="table table-hover table-striped" >
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Autor</th>
+        <th>Fecha publicacion</th>
+        <th>Precio</th>
+        <th>Paginas</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody v-if="!search">
+      <tr v-for="libro in paginated('libros')" >
+        <td>${ libro.titulo }$</td>
+        <td>${ libro.autor }$</td>
+        <td>${ libro.fecha_publicacion }$</td>
+        <td>${ libro.precio }$</td>
+        <td>${ libro.paginas }$</td>
+        <td width="20px"><a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editLibro(libro)">Editar</a></td>
+        <td width="20px"><a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteLibro(libro)">Eliminar</a></td>
+      </tr>
+    </tbody>
+    <tbody v-else>
+      <tr v-for="libro in filtrar">
+        <td>${ libro.titulo }$</td>
+        <td>${ libro.autor }$</td>
+        <td>${ libro.fecha_publicacion }$</td>
+        <td>${ libro.precio }$</td>
+        <td>${ libro.paginas }$</td>
+        <td width="20px"><a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editLibro(libro)">Editar</a></td>
+        <td width="20px"><a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteLibro(libro)">Eliminar</a></td>
+      </tr>
+    </tbody>
+  </table>
+</paginate>
+
+<paginate-links v-if="!search" for="libros" :show-step-links="true" :limit="2"
+:classes="{
+    'ul': 'pagination',
+  }" ></paginate-links>
+
+  <div class="modal fade" id="create">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          {% include "crud/crear_libro.html" %}
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="edit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          {% include "crud/editar_libro.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
